@@ -1,0 +1,57 @@
+настроить окружение python3 -m venv venv
+Активируйте виртуальное окружение: source venv/bin/activate
+
+Установка Django и Django REST Framework
+Установите Django и Django REST Framework с помощью pip:
+pip install django djangorestframework
+
+
+Шаг 3: Создание проекта Django
+Создайте новый проект Django, используя следующую команду:
+django-admin startproject myproject .
+
+Шаг 4: Создание нового приложения Django
+Создайте новое приложение в рамках проекта:
+python manage.py startapp myapi
+
+
+Шаг 5: Настройка приложения в settings.py
+Откройте myproject/settings.py.
+
+Добавьте созданное приложение ('myapi') и 'rest_framework' в список INSTALLED_APPS:
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'myapi',
+]
+
+Шаг 6: Создание модели данных
+В файле myapi/models.py определите модель данных. Например, для хранения информации о пользователях:
+from django.db import models
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    ```
+
+Выполните миграции, чтобы применить изменения в базе данных:
+python manage.py makemigrations
+python manage.py migrate
+
+Шаг 7: Создание сериализатора
+В папке myapi создайте файл serializers.py.
+
+Определите сериализатор для модели:
+from rest_framework import serializers
+from .models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+Шаг 8: Создание представлений и маршрутов
+В myapi/views.py, создайте представления для вашего API.
+Используйте роутеры Django REST Framework для объявления маршрутов в myapi/urls.py.
+Шаг 9: Запуск сервера разработки
+Запустите сервер:
+python manage.py runserver
